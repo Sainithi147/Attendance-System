@@ -1,0 +1,182 @@
+/* Body styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-image: url('wp9764093.webp'); /* Replace with your image filename */
+    background-size: cover;
+    background-position: center;
+}
+
+/* Dashboard container */
+.dashboard-container {
+    background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent white background */
+    width: 80%;
+    max-width: 600px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    text-align: center;
+    color: black;
+    border: 2px solid transparent;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    overflow-y: auto; /* Allows scrolling if content overflows */
+    max-height: 90vh; /* Ensures dashboard stays within screen */
+}
+
+/* Glowing border effect on hover */
+.dashboard-container:hover {
+    border-color: black;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+}
+
+/* Headers */
+.dashboard-header {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+h2, h3 {
+    text-align: center;
+    margin: 10px 0;
+}
+
+/* Attendance information */
+.attendance-info {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+/* Percentage display */
+.attendance-percentage {
+    font-size: 32px;
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+/* Buttons and inputs */
+button, input[type="text"], input[type="email"], input[type="password"] {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    outline: none;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.logout-button {
+    background-color: #d9534f;
+}
+
+.logout-button:hover {
+    background-color: #c9302c;
+}
+
+#view-all-attendance-button {
+    margin-bottom: 15px;
+}
+
+/* Login container styles */
+.login-container {
+    background-color: rgba(255, 255, 255, 0.3);
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    margin: auto;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    color: white;
+    border: 2px solid transparent;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.login-container:hover {
+    border-color: black;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+}
+
+.login-container h2 {
+    margin-bottom: 20px;
+}
+
+.login-container select,
+.login-container input[type="text"],
+.login-container input[type="password"],
+.login-container button {
+    width: 90%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    outline: none;
+    font-size: 16px;
+}
+
+.error {
+    color: red;
+    font-size: 14px;
+}
+
+/* Input and select styling */
+input, select {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: none;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    width: 100%;
+    color: black;
+}
+
+select {
+    background-color: rgba(200, 200, 255, 0.9);
+    color: black;
+}
+
+input::placeholder {
+    color: rgba(0, 0, 0, 0.7);
+}
+
+/* Attendance table styles */
+.attendance-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    overflow-x: auto;
+}
+
+.attendance-table th, .attendance-table td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.attendance-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 600px) {
+    .attendance-table {
+        display: block;
+        overflow-x: auto;
+    }
+}

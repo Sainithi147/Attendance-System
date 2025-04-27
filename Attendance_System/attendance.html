@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tag track</title>
+    <link rel="stylesheet" href="attedancestyle.css"> <!-- Link to CSS file -->
+</head>
+<body>
+
+<div class="login-container">
+    <h2>Attendance Tracker</h2>
+    
+    <!-- Role Selection -->
+    <label for="role">Select Role:</label>
+    <select id="role">
+        <option value="admin">Admin</option>
+        <option value="user">User</option>
+    </select>
+    
+    <!-- Username and Password Fields -->
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    
+    <!-- Error Message Display -->
+    <div class="error" id="error-message"></div>
+    
+    <!-- Login Button -->
+    <button onclick="login()">Login</button>
+</div>
+
+<script src="attendancevalidate.js"></script> <!-- Link to JavaScript file -->
+
+</body>
+</html>

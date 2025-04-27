@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="attedancestyle.css"> <!-- Link to your external CSS file -->
+</head>
+<body>
+
+<div class="dashboard-container">
+    <h2>User Dashboard</h2>
+    <div id="attendance-info" class="attendance-info"></div>
+    <div id="attendance-percentage" class="attendance-percentage"></div>
+    <button class="logout-button" onclick="logout()">Logout</button>
+</div>
+
+<script>
+    // Function to fetch user attendance and display it
+    async function fetchUserAttendance() {
+        const studentId = localStorage.getItem('studentId'); // Get studentId from localStorage
+
+        if (!studentId) {
+            alert('No student ID found. Please log in again.');
+            window.location.href = 'attendance.html'; // Redirect to login page
+            return;
+        }
+
+        const response = await fetch(`http://localhost:3000/get-user-attendance/${studentId}`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+            document.getElementById('attendance-info').innerText = 
+                `Name: ${data.name}, Register Number: ${data.registerNum}, Total Classes: ${data.totalClasses}, Attended: ${data.attendedClasses}`;
+            document.getElementById('attendance-percentage').innerText = 
+                `Attendance Percentage: ${data.attendancePercentage}%`;
+        } else {
+            document.getElementById('attendance-info').innerText = 'Error fetching attendance data.';
+            console.error(data.message);
+        }
+    }
+
+    // Call the function on page load
+    fetchUserAttendance();
+
+    // Logout function
+    function logout() {
+        localStorage.removeItem('studentId'); // Clear student ID on logout
+        window.location.href = 'attendance.html'; // Redirect to login page
+    }
+</script>
+
+</body>
+</html>

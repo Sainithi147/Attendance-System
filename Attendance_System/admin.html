@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="attedancestyle.css"> <!-- Link to your external CSS file -->
+</head>
+<body>
+
+<div class="dashboard-container">
+    <h2>Admin Dashboard</h2>
+
+    <!-- View All Attendance Section -->
+    <h3>View All Students Attendance</h3>
+    <button id="view-all-attendance-button">Show All Attendance</button>
+
+    <!-- Add Student Section -->
+    <h3>Add Student</h3>
+    <form id="add-student-form">
+        <input type="text" id="student-username" placeholder="Username" required>
+        <input type="password" id="student-password" placeholder="Password" required>
+        <input type="text" id="student-name" placeholder="Name" required>
+        <input type="email" id="student-email" placeholder="Email" required>
+        <input type="text" id="student-register-num" placeholder="Register Number" required>
+        <input type="text" id="student-mobile" placeholder="Mobile Number" required>
+        <button type="submit">Add Student</button>
+    </form>
+
+    <!-- Remove Student Section -->
+    <h3>Remove Student</h3>
+    <input type="text" id="remove-student-register" placeholder="Enter Register Number">
+    <button id="remove-student-button">Remove Student</button>
+    
+    <!-- Manual Update Attendance Section -->
+    <h3>Manual Update Attendance</h3>
+    <button id="manual-update-button">Update Attendance</button>
+
+    <!-- Logout Button -->
+    <button class="logout-button" onclick="logout()">Logout</button>
+</div>
+
+<script>
+    // Redirect to attendance view
+    document.getElementById('view-all-attendance-button').addEventListener('click', () => {
+        window.location.href = 'all-attendance.html'; // Redirect to the attendance page
+    });
+
+    // Fetch attendance data and populate the attendance table
+    async function fetchAttendance() {
+        const response = await fetch('http://localhost:3000/get-all-students-attendance');
+        const data = await response.json();
+        const tableBody = document.querySelector('#attendance-table tbody');
+        tableBody.innerHTML = ''; // Clear existing rows
+
+        data.forEach(student => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${student.name}</td>
+                <td>${student.register_num}</td>
+                <td>${student.attendance_percentage}%</td>
+            `;
+            tableBody.appendChild(row);
+        });
+    }
+
+    // Add a new student
+    async function addStudent(event) {
+        event.preventDefault();
+        const studentData = {
+            username: document.getElementById('student-username').value,
+            password: document.getElementById('student-password').value,
+            name: document.getElementById('student-name').value,
+            email: document.getElementById('student-email').value,
+            register_num: document.getElementById('student-register-num').value,
+            mobile: document.getElementById('student-mobile').value,
+        };
+
+        const response = await fetch('http://localhost:3000/add-student', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(studentData),
+        });
+
+        const result = await response.json();
+        alert(result.message);
+        fetchAttendance(); // Refresh attendance data
+    }
+
+    // Remove a student using their register number
+    async function removeStudent() {
+        const registerNum = document.getElementById('remove-student-register').value.trim();
+
+        if (!registerNum) {
+            alert('Please enter a register number.');
+            return;
+        }
+
+        const response = await fetch('http://localhost:3000/remove-student', {
+    method: 'DELETE',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ register_num: registerNum }) // Ensure registerNum is defined
+});
+
+
+        const result = await response.json();
+        alert(result.message);
+        fetchAttendance(); // Refresh attendance data
+    }
+
+    // Manual update attendance
+    async function manualUpdateAttendance() {
+        const response = await fetch('http://localhost:3000/manual-update-attendance', {
+            method: 'POST',
+        });
+        const result = await response.json();
+        alert(result.message);
+    }
+
+    // Event listeners for form submissions and button clicks
+    document.getElementById('add-student-form').addEventListener('submit', addStudent);
+    document.getElementById('remove-student-button').addEventListener('click', removeStudent);
+    document.getElementById('manual-update-button').addEventListener('click', manualUpdateAttendance);
+
+    // Call function to load initial data
+    fetchAttendance();
+
+    // Logout function
+    function logout() {
+        localStorage.removeItem('adminId'); // Clear admin ID on logout
+        window.location.href = 'attendance.html'; // Redirect to login page
+    }
+</script>
+
+</body>
+</html>

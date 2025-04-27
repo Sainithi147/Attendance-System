@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Students Attendance</title>
+    <link rel="stylesheet" href="attedancestyle.css"> <!-- Link to your external CSS file -->
+</head>
+<body>
+
+<div class="attendance-container">
+    <h2>All Students Attendance</h2>
+    <table id="all-attendance-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Register Number</th>
+                <th>Attendance Percentage</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Student attendance data will be populated here -->
+        </tbody>
+    </table>
+
+    <button class="logout-button" onclick="logout()">Logout</button>
+</div>
+
+<script>
+    // Fetch all students' attendance data and populate the table
+    async function fetchAllAttendance() {
+        const response = await fetch('http://localhost:3000/get-all-students-attendance');
+        const data = await response.json();
+        const tableBody = document.querySelector('#all-attendance-table tbody');
+        tableBody.innerHTML = ''; // Clear existing rows
+
+        data.forEach(student => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${student.name}</td>
+                <td>${student.register_num}</td>
+                <td>${student.attendance_percentage}%</td>
+            `;
+            tableBody.appendChild(row);
+        });
+    }
+
+    // Logout function
+    function logout() {
+        localStorage.removeItem('adminId'); // Clear admin ID on logout
+        window.location.href = 'attendance.html'; // Redirect to login page
+    }
+
+    // Call function to load attendance data
+    fetchAllAttendance();
+</script>
+
+</body>
+</html>
