@@ -1,0 +1,6 @@
+express
+mysql2
+body-parser
+cors
+googleapis
+node-cron
